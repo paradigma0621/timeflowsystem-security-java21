@@ -4,6 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -17,8 +21,10 @@ public class ProjectSecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/users/**").authenticated()
-                        .anyRequest().permitAll())
+                            //.requestMatchers("/customers/**").permitAll()
+                            .requestMatchers("/users/**").authenticated()
+                            .anyRequest().permitAll()
+                        )
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
@@ -35,4 +41,12 @@ public class ProjectSecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+    @Bean
+    public UserDetailsService userDetailsService() {
+        UserDetails user = User.withUsername("user").password("{noop}12345").authorities("read").build();
+        UserDetails admin = User.withUsername("admin").password("{noop}54321").authorities("admin").build();
+        return new InMemoryUserDetailsManager(user, admin);
+    }
+
 }
