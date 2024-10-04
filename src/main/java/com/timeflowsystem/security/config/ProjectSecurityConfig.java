@@ -4,10 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -41,15 +37,4 @@ public class ProjectSecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
-    @Bean
-    public UserDetailsService userDetailsService() {
-        // "user" password: 987
-        UserDetails user = User.withUsername("user").password("{bcrypt}$2a$12$cfXEFJI/C4YSGDuj8r6KnOeKHTd82W022S8lHTZFgRBqSvtahKVGm").authorities("read").build();
-
-        // "admin" password: 123
-        UserDetails admin = User.withUsername("admin").password("{MD4}c58cda49f00748a3bc0fcfa511d516cb").authorities("admin").build();
-        return new InMemoryUserDetailsManager(user, admin);
-    }
-
 }
