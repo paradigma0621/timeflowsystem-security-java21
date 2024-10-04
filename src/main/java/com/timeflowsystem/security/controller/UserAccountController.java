@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/users")
-public class UserController {
+@RequestMapping("/user-accounts")
+public class UserAccountController {
 
-    @GetMapping("/getUser")
+    @GetMapping("/getUserAccount")
     public String findUser() {
         return "logged!!";
     }
