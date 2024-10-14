@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class TimeflowUsernamePwdAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
-    // private final PasswordEncoder passwordEncoder;
+    // private final PasswordEncoder passwordEncoder; //Removed password validation
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
