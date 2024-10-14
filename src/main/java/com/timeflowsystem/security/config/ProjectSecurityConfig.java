@@ -13,12 +13,13 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@Profile("!prod")
+@Profile("dev")
 public class ProjectSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http.requiresChannel(rcc -> rcc.anyRequest().requiresInsecure()) // Only HTTP (deny HTTPS requests)
+                .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                             .requestMatchers("/customers/**").permitAll()

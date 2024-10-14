@@ -19,7 +19,8 @@ public class ProjectSecurityProdConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http//.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS (deny HTTP requests)
+                .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user-accounts/**", "/customers/**").authenticated()
