@@ -3,20 +3,22 @@ package com.timeflowsystem.security.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("prod")
 @RequiredArgsConstructor
-@Profile("!prod")
-public class TimeflowUsernamePwdAuthenticationProvider implements AuthenticationProvider {
+public class TimeflowProdUsernamePwdAuthenticationProvider implements AuthenticationProvider {
 
     private final UserDetailsService userDetailsService;
-    // private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -24,18 +26,16 @@ public class TimeflowUsernamePwdAuthenticationProvider implements Authentication
         String pwd = authentication.getCredentials().toString();
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);  // Here, as was declared
-                                        // that "class TimeflowUserDetailsService implements UserDetailsService"
-                                        // it will execute the method loadUserByUsername from that class when called
+                                                // that "class TimeflowUserDetailsService implements UserDetailsService"
+                                                // it will execute the method loadUserByUsername from that class when called
 
-       // if (passwordEncoder.matches(pwd, userDetails.getPassword())) { //Removed password validation
-
-            return new UsernamePasswordAuthenticationToken(username, pwd, userDetails.getAuthorities());
-
-       /* } else {
+        if (passwordEncoder.matches(pwd, userDetails.getPassword())) {
+            // Fetch Age details and perform validation to check if age >18
+            return new UsernamePasswordAuthenticationToken(username,pwd,userDetails.getAuthorities());
+        }else {
             throw new BadCredentialsException("Invalid password!");
-        */
-       }
-
+        }
+    }
 
     @Override
     public boolean supports(Class<?> authentication) {
