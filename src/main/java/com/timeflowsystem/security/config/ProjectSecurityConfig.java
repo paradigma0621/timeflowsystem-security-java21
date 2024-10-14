@@ -1,5 +1,6 @@
 package com.timeflowsystem.security.config;
 
+import com.timeflowsystem.security.exceptionhandling.CustomBasicAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -24,9 +25,9 @@ public class ProjectSecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                             .requestMatchers("/customers/**").permitAll()
                             .requestMatchers("/user-accounts/**").authenticated()
-                        )
-                .httpBasic(Customizer.withDefaults());
+                );
 
+        http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
         return http.build();
     }
 

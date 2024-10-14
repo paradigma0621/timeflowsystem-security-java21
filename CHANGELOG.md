@@ -1,7 +1,9 @@
 # Changelog
 
 ## 2024-10-14
-### Commit (Added bean configuration to manage allowing or denying HTTP and HTTPS requests)
+### Commit  (Add handling for AuthenticationException)
+- Add custom response for authentication errors
+### Commit 37b020f (Added bean configuration to manage allowing or denying HTTP and HTTPS requests)
 - Added HTTP request filter to bean configuration to the 'dev' profile. Added a commented HTTPS request filter for the 'prod' profile
 ### Commit bee08a2 (Added other implementation for selecting configurations based on different profiles)
 - Added other @Profile() annotations inside classes in 'config' package
