@@ -25,7 +25,13 @@ public class ProjectSecurityProdConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user-accounts/**", "/customers/**").authenticated()
-                );
+                )
+                .formLogin(Customizer.withDefaults());
+
+        // This is a preferred global configuration:
+        //     http.exceptionHandling(ehc -> ehc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
+        // because it handles other ways of error 401 (Unauthorized)
+        // But, this exceptionHandling disables the .formLogin(Customizer.withDefaults()) configuration
 
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
 

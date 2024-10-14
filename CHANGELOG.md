@@ -1,7 +1,9 @@
 # Changelog
 
 ## 2024-10-14
-### Commit  (Add handling for AuthenticationException)
+### Commit  (Add global custom response for authentication errors (401 Unauthorized))
+- Add handling for AuthenticationException using http.exceptionHandling())
+### Commit c1fbb0a (Add handling for AuthenticationException)
 - Add custom response for authentication errors
 ### Commit 37b020f (Added bean configuration to manage allowing or denying HTTP and HTTPS requests)
 - Added HTTP request filter to bean configuration to the 'dev' profile. Added a commented HTTPS request filter for the 'prod' profile
