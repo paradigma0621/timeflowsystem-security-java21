@@ -1,7 +1,11 @@
 # Changelog
 
+## 2024-10-15
+### Commit  (Add global custom response for access denied errors (403 Forbidden))
+- Add handling for AccessDeniedException using http.exceptionHandling()). Ensure a user-friendly response is returned when access is denied, enhancing the user experience for 403 Forbidden errors	
+
 ## 2024-10-14
-### Commit  (Add global custom response for authentication errors (401 Unauthorized))
+### Commit 9c83c17 (Add global custom response for authentication errors (401 Unauthorized))
 - Add handling for AuthenticationException using http.exceptionHandling())
 ### Commit c1fbb0a (Add handling for AuthenticationException)
 - Add custom response for authentication errors

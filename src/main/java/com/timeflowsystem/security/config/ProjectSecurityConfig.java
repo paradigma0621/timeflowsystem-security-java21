@@ -1,5 +1,6 @@
 package com.timeflowsystem.security.config;
 
+import com.timeflowsystem.security.exceptionhandling.CustomAccessDeniedHandler;
 import com.timeflowsystem.security.exceptionhandling.CustomBasicAuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,12 +29,13 @@ public class ProjectSecurityConfig {
                 )
                 .formLogin(Customizer.withDefaults());
 
-        // This is a preferred global configuration:
-        //     http.exceptionHandling(ehc -> ehc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
-        // because it handles other ways of error 401 (Unauthorized).
-        // But, this exceptionHandling disables the .formLogin(Customizer.withDefaults()) configuration
-
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
+
+        http.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()));
+        // In the example above, when a 403 error occurs during browser access, a JSON response is shown.
+        // Using the example below, we can specify a URL to redirect the user to when they attempt to access a page without
+        // the necessary permissions.
+        //http.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()).accessDeniedPage("/denied"));
 
         return http.build();
     }
