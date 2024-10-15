@@ -20,11 +20,15 @@ public class ProjectSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.requiresChannel(rcc -> rcc.anyRequest().requiresInsecure()) // Only HTTP (deny HTTPS requests)
+        http
+                // Using the below config, the user can be redirected to the given URL when an invalid session is detected,
+                .sessionManagement(sessionConfig -> sessionConfig.invalidSessionUrl("/invalidSession"))
+
+                .requiresChannel(rcc -> rcc.anyRequest().requiresInsecure()) // Only HTTP (deny HTTPS requests)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
-                            .requestMatchers("/customers/**").permitAll()
+                            .requestMatchers("/customers/**", "/invalidSession").permitAll()
                             .requestMatchers("/user-accounts/**").authenticated()
                 )
                 .formLogin(Customizer.withDefaults());
