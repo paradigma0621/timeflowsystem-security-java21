@@ -23,14 +23,22 @@ public class ProjectSecurityProdConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 // Using the below config, the user can be redirected to the given URL when an invalid session is detected,
-                .sessionManagement(sessionConfig -> sessionConfig.invalidSessionUrl("/invalidSession"))
+                // by, for example: Session Timeout
+                .sessionManagement(sessionConfig -> sessionConfig.invalidSessionUrl("/invalidSession")
+
+                // We can control the maximum sessions allowed for a user and what should happen in the case of
+                // invalid session due to too many sessions for the current user
+                // The following configuration restricts each user to a single active session.
+                // If a user attempts to log in from another device, the system will block the new session and redirect
+                // the user to the "/expiredSession" page.
+                                         .maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/expiredSession"))
 
                 //.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS (deny HTTP requests)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user-accounts/**", "/customers/**").authenticated()
-                        .requestMatchers("/invalidSession").permitAll()
+                        .requestMatchers("/invalidSession", "/expiredSession").permitAll()
                 )
                 .formLogin(Customizer.withDefaults());
 
@@ -40,7 +48,7 @@ public class ProjectSecurityProdConfig {
         // In the example above, when a 403 error occurs during browser access, a JSON response is shown.
         // Using the example below, we can specify a URL to redirect the user to when they attempt to access a page without
         // the necessary permissions.
-        //http.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()).accessDeniedPage("/denied"));
+        // http.exceptionHandling(ehc -> ehc.accessDeniedHandler(new CustomAccessDeniedHandler()).accessDeniedPage("/denied"));
 
         return http.build();
     }

@@ -1,7 +1,11 @@
 # Changelog
 
+## 2024-10-16
+### Commit  (Add limit number of sessions per user)
+- Add a limit on the number of active sessions for logged-in users
+
 ## 2024-10-15
-### Commit (Add Session timeout. Specify a load endpoint to redirect in this scenario)
+### Commit 761bdb4 (Add Session timeout. Specify a load endpoint to redirect in this scenario)
 - Add timeout configuration based on idle time limit. Redirect the user to a specific page when attempting to access the system after session expiration.
 ### Commit 994103f (Add global custom response for access denied errors (403 Forbidden))
 - Add handling for AccessDeniedException using http.exceptionHandling()). Ensure a user-friendly response is returned when access is denied, enhancing the user experience for 403 Forbidden errors	
