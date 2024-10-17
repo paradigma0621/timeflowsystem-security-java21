@@ -31,7 +31,8 @@ public class ProjectSecurityProdConfig {
                 // The following configuration restricts each user to a single active session.
                 // If a user attempts to log in from another device, the system will block the new session and redirect
                 // the user to the "/expiredSession" page.
-                                         .maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/expiredSession"))
+                //                         .maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/expiredSession")
+                )
 
                 //.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS (deny HTTP requests)
                 .csrf(csrf -> csrf.disable())

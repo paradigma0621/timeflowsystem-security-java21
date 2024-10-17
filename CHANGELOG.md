@@ -1,7 +1,11 @@
 # Changelog
 
+## 2024-10-17
+### Commit (Add Authentication Event Listeners)
+- Add listeners for login success and failure events. Log detailed information on successful and failed login attempts, including the username and failure reason.
+
 ## 2024-10-16
-### Commit  (Add limit number of sessions per user)
+### Commit f6c07aa (Add limit number of sessions per user)
 - Add a limit on the number of active sessions for logged-in users
 
 ## 2024-10-15
