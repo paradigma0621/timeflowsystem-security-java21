@@ -1,7 +1,11 @@
 # Changelog
 
+## 2024-10-21
+### Commit  (Add access point to login from frontend)
+- Added a listener on the /backendLoginEndpoint to handle login requests from the React frontend application. See README.md for details of frontend React App available on GitHub.
+
 ## 2024-10-17
-### Commit (Add Authentication Event Listeners)
+### Commit 0fee001 (Add Authentication Event Listeners)
 - Add listeners for login success and failure events. Log detailed information on successful and failed login attempts, including the username and failure reason.
 
 ## 2024-10-16

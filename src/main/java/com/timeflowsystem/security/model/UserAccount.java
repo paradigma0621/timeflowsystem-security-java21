@@ -1,12 +1,13 @@
 package com.timeflowsystem.security.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "user_account")
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserAccount {
 
     @Id

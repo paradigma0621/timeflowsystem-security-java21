@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/user-accounts")
@@ -39,6 +41,10 @@ public class UserAccountController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("An exception occurred: " + ex.getMessage());
         }
+    }
 
+    @GetMapping("/all")
+    public List<UserAccount> findAll() {
+        return List.of(userAccountRepository.findById(1L).orElse(null));
     }
 }
