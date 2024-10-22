@@ -1,7 +1,11 @@
 # Changelog
 
+## 2024-10-22
+### Commit  (Add handlers to manage login validation success and failure scenarios)
+- Add CustomAuthenticationSuccessHandler and CustomAuthenticationFailureHandler, implementing the respective handlers to manage login scenarios
+
 ## 2024-10-21
-### Commit  (Add access point to login from frontend)
+### Commit 819aad1 (Add access point to login from frontend)
 - Added a listener on the /backendLoginEndpoint to handle login requests from the React frontend application. See README.md for details of frontend React App available on GitHub.
 
 ## 2024-10-17

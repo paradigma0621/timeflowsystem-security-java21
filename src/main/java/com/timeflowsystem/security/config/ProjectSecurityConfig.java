@@ -2,6 +2,9 @@ package com.timeflowsystem.security.config;
 
 import com.timeflowsystem.security.exceptionhandling.CustomAccessDeniedHandler;
 import com.timeflowsystem.security.exceptionhandling.CustomBasicAuthenticationEntryPoint;
+import com.timeflowsystem.security.handler.CustomAuthenticationFailureHandler;
+import com.timeflowsystem.security.handler.CustomAuthenticationSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -15,7 +18,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @Profile("dev")
+@RequiredArgsConstructor
 public class ProjectSecurityConfig {
+
+    private final CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler authenticationFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -44,13 +51,14 @@ public class ProjectSecurityConfig {
                                 .passwordParameter("pwd") // Field password to be received from frontend
                                 .loginProcessingUrl("/backendLoginEndpoint") // Tells to frontend to send to this endpoint
                                                                              // the login data (userid, pwd)
-                                .defaultSuccessUrl("/login/success") // Endpoint executed or page to be loaded when login
-                                                                     // successful
-                                .failureUrl("/login/denied")); // Endpoint executed or page to be
-                                                                                       // loaded when login failure
 
-                        //   .successHandler(authenticationSuccessHandler) //explained in next commit
-                        //   .failureHandler(authenticationFailureHandler)) //explained in next commit
+                                //.defaultSuccessUrl("/login/success") // Endpoint executed or page to be loaded when login
+                                                                       // successful
+                                //.failureUrl("/login/denied")); // Endpoint executed or page to be
+                                                                 // loaded when login failure
+
+                                .successHandler(authenticationSuccessHandler)
+                                .failureHandler(authenticationFailureHandler));
 
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
 
