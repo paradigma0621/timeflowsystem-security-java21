@@ -23,4 +23,10 @@ public class LoginController {
     public RedirectView redirectToFrontend() {
         return new RedirectView("http://localhost:3000/start"); // TODO Necessary to correct CORS error
     }
+
+    @GetMapping(value = "/logoutSuccessfully")
+    public String returnLogoutSuccessfully() {
+        return "Logout with success! (Message from backend)";
+    }
+
 }

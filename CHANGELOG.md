@@ -1,7 +1,11 @@
 # Changelog
 
+## 2024-11-02
+### Commit  (Add Logout Functionality)
+- Add logout functionality using the `/logout` endpoint to properly terminate the session of a previously logged-in account. Session cookies are cleared upon logout, enforcing a secure logout process.
+
 ## 2024-10-22
-### Commit  (Add handlers to manage login validation success and failure scenarios)
+### Commit 44c1cb9 (Add handlers to manage login validation success and failure scenarios)
 - Add CustomAuthenticationSuccessHandler and CustomAuthenticationFailureHandler, implementing the respective handlers to manage login scenarios
 
 ## 2024-10-21

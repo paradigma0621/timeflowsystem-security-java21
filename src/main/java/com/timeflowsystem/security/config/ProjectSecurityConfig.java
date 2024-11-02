@@ -58,7 +58,13 @@ public class ProjectSecurityConfig {
                                                                  // loaded when login failure
 
                                 .successHandler(authenticationSuccessHandler)
-                                .failureHandler(authenticationFailureHandler));
+                                .failureHandler(authenticationFailureHandler))
+                .logout(logoutConfigurer -> logoutConfigurer
+                                .logoutUrl("/logout") // Can be omitted, as the default value is "/logout"
+                                .logoutSuccessUrl("/login/logoutSuccessfully")
+                                .invalidateHttpSession(true)
+                                .clearAuthentication(true)
+                                .deleteCookies("JSESSIONID"));
 
         http.httpBasic(hbc -> hbc.authenticationEntryPoint(new CustomBasicAuthenticationEntryPoint()));
 
