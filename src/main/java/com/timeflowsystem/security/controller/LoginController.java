@@ -29,4 +29,14 @@ public class LoginController {
         return "Logout with success! (Message from backend)";
     }
 
+    @GetMapping(value = "/invalidSession")
+    public String returnInvalidSession() {
+        return "Invalid session! (Message from backend)";
+    }
+
+    @GetMapping(value = "/expiredSession")
+    public String returnExpiredSession() {
+        return "Expired session! (Message from backend)";
+    }
+
 }

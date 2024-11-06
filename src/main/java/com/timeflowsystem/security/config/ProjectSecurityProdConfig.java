@@ -30,22 +30,22 @@ public class ProjectSecurityProdConfig {
         http
                 // Using the below config, the user can be redirected to the given URL when an invalid session is detected,
                 // by, for example: Session Timeout
-                .sessionManagement(sessionConfig -> sessionConfig.invalidSessionUrl("/invalidSession")
+                // .sessionManagement(sessionConfig -> sessionConfig.invalidSessionUrl("/login/invalidSession")
 
                 // We can control the maximum sessions allowed for a user and what should happen in the case of
                 // invalid session due to too many sessions for the current user
                 // The following configuration restricts each user to a single active session.
                 // If a user attempts to log in from another device, the system will block the new session and redirect
-                // the user to the "/expiredSession" page.
-                //                         .maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/expiredSession")
-                )
+                // the user to the "/login/expiredSession" page.
+                //                         .maximumSessions(1).maxSessionsPreventsLogin(true).expiredUrl("/login/expiredSession")
+                //)
 
                 //.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS (deny HTTP requests)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/user-accounts/**", "/customers/**").authenticated()
-                        .requestMatchers("/invalidSession", "/expiredSession", "/login/**").permitAll()
+                        .requestMatchers("/login/**").permitAll()
                 )
 
                 .formLogin(flc -> flc.loginPage("/login/requestLogin") // Endpoint executed or page to be loaded when

@@ -1,7 +1,11 @@
 # Changelog
 
+## 2024-11-06
+### Commit  (Add SecurityContextHolder logic)
+- Add configuration and use examples of SecurityContextHolder functionalities.
+
 ## 2024-11-02
-### Commit  (Add Logout Functionality)
+### Commit 12c2409 (Add Logout Functionality)
 - Add logout functionality using the `/logout` endpoint to properly terminate the session of a previously logged-in account. Session cookies are cleared upon logout, enforcing a secure logout process.
 
 ## 2024-10-22

@@ -5,6 +5,8 @@ import com.timeflowsystem.security.repository.UserAccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +48,17 @@ public class UserAccountController {
     @GetMapping("/all")
     public List<UserAccount> findAll() {
         return List.of(userAccountRepository.findById(1L).orElse(null));
+    }
+
+    @GetMapping("/find-string-authenticated-by-security-context-instance")
+    public String findAuthenticationBySecurityContextInstance() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String strategy = SecurityContextHolder.getContextHolderStrategy().getClass().getName();
+        return authentication.toString() + " - with strategy: " + strategy;
+    }
+
+    @GetMapping("/find-string-authenticated-by-method-parameter")
+    public String findUserAuthenticatedByMethodParameter(Authentication authentication) {
+        return authentication.toString();
     }
 }
