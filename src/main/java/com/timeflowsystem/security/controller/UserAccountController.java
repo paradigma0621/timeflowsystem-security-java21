@@ -59,6 +59,8 @@ public class UserAccountController {
 
     @GetMapping("/find-string-authenticated-by-method-parameter")
     public String findUserAuthenticatedByMethodParameter(Authentication authentication) {
-        return authentication.toString();
+        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_GLOBAL);
+        String strategy = SecurityContextHolder.getContextHolderStrategy().getClass().getName();
+        return authentication.toString() + " - with strategy: " + strategy;
     }
 }

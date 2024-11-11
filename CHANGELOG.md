@@ -1,7 +1,7 @@
 # Changelog
 
 ## 2024-11-06
-### Commit  (Add SecurityContextHolder logic)
+### Commit 9ff9679 (Add SecurityContextHolder logic)
 - Add configuration and use examples of SecurityContextHolder functionalities.
 
 ## 2024-11-02
