@@ -1,7 +1,9 @@
 # Changelog
 
 ## 2025-01-14
-### Commit  (Add Roles to UserAccount)
+### Commit (Add filters debug configuration)
+- Added configuration to enable access to debug information for filters in console
+### Commit 3fb8d59 (Add Roles to UserAccount)
 - Add role-based access control for endpoints requiring user login
 ### Commit ee9b2e9 (Add Authorities to UserAccount)
 - Add authorities-based access control for endpoints requiring user login
