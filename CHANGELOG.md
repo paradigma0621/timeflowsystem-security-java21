@@ -1,5 +1,9 @@
 # Changelog
 
+## 2025-01-14
+### Commit  (Add Authorities to UserAccount)
+- Add authorities-based access control for endpoints requiring user login
+
 ## 2024-11-06
 ### Commit 9ff9679 (Add SecurityContextHolder logic)
 - Add configuration and use examples of SecurityContextHolder functionalities.

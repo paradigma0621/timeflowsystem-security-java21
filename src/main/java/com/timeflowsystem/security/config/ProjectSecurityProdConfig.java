@@ -43,11 +43,13 @@ public class ProjectSecurityProdConfig {
                 //.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS (deny HTTP requests)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/user-accounts/**", "/customers/**").authenticated()
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS", "CUSTOMERACTIONS")
+                        //.requestMatchers("/user-accounts/**").hasAnyAuthority("CUSTOMERACTIONS")
+                        //.requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS")
+                        .requestMatchers("/customers/**").authenticated()
                         .requestMatchers("/login/**").permitAll()
                 )
-
                 .formLogin(flc -> flc.loginPage("/login/requestLogin") // Endpoint executed or page to be loaded when
                                                                        // requires login
                                 .usernameParameter("userid") // Field username to be received from frontend

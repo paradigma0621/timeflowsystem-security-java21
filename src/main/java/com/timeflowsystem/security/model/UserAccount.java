@@ -3,6 +3,8 @@ package com.timeflowsystem.security.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "user_account")
 @Getter @Setter
@@ -17,8 +19,11 @@ public class UserAccount {
     private String email;
     private String pwd;
 
-    @Column(name = "role")
-    private String role;
+   // @Column(name = "role")
+   // private String role;
+
+    @OneToMany(mappedBy = "userAccount", fetch = FetchType.EAGER)
+    private Set<Authority> authorities;
 
     private boolean removed;
 

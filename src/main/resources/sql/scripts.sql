@@ -13,3 +13,35 @@ INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `role`, `removed`) V
 
 -- Password: 987
 INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `role`, `removed`) VALUES (2, 'admin@example.com', '{bcrypt}$2a$12$cfXEFJI/C4YSGDuj8r6KnOeKHTd82W022S8lHTZFgRBqSvtahKVGm', 'admin', 0);
+
+-- Password: 123
+INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `role`, `removed`) VALUES (1, 'tf', '{bcrypt}$2a$10$.EGF/9QGp2eXZT/ZX4hdm.PtRZyn19DucE4AKChjUHP/U/J43YB2y', 'admin', 0);
+
+
+CREATE TABLE `customer` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `mobile_number` varchar(20) NOT NULL,
+  `create_dt` date DEFAULT NULL,
+  PRIMARY KEY (`customer_id`)
+);
+
+INSERT INTO `customer` (`name`,`email`,`mobile_number`, `create_dt`)
+ VALUES ('Home','home@example.com','5334122365', CURDATE());
+
+
+CREATE TABLE `authorities` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_account_id` int NOT NULL,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`user_account_id`),
+  CONSTRAINT `authorities_user_account_fk` FOREIGN KEY (`user_account_id`) REFERENCES `user_account` (`id`)
+);
+
+INSERT INTO `authorities` (`user_account_id`, `name`)
+ VALUES (1, 'CUSTOMERACTIONS');
+
+INSERT INTO `authorities` (`user_account_id`, `name`)
+ VALUES (1, 'USERACCOUNTACTIONS');
