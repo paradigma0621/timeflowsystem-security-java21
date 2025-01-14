@@ -19,9 +19,6 @@ public class UserAccount {
     private String email;
     private String pwd;
 
-   // @Column(name = "role")
-   // private String role;
-
     @OneToMany(mappedBy = "userAccount", fetch = FetchType.EAGER)
     private Set<Authority> authorities;
 

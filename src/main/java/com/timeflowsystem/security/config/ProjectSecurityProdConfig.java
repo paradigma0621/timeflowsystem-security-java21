@@ -44,10 +44,12 @@ public class ProjectSecurityProdConfig {
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS", "CUSTOMERACTIONS")
+                        //.requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS", "CUSTOMERACTIONS")
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("CUSTOMERACTIONS")
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS")
-                        .requestMatchers("/customers/**").authenticated()
+                        .requestMatchers("/user-accounts/**").hasAnyRole("USER", "ADMIN")
+                        //.requestMatchers("/user-accounts/**").hasRole("USER")
+                        //.requestMatchers("/user-accounts/**").hasRole("USER")
                         .requestMatchers("/login/**").permitAll()
                 )
                 .formLogin(flc -> flc.loginPage("/login/requestLogin") // Endpoint executed or page to be loaded when

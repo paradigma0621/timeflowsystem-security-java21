@@ -1,7 +1,9 @@
 # Changelog
 
 ## 2025-01-14
-### Commit  (Add Authorities to UserAccount)
+### Commit  (Add Roles to UserAccount)
+- Add role-based access control for endpoints requiring user login
+### Commit ee9b2e9 (Add Authorities to UserAccount)
 - Add authorities-based access control for endpoints requiring user login
 
 ## 2024-11-06

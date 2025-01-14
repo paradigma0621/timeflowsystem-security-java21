@@ -3,19 +3,18 @@ CREATE TABLE `user_account` (
   `customer_id` bigint NOT NULL,
   `email` varchar(45) NOT NULL,
   `pwd` varchar(200) NOT NULL,
-  `role` varchar(45) NOT NULL,
   `removed` bit(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
 -- Password: EazyBytes@12345
-INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `role`, `removed`) VALUES (1, 'happy@example.com', '{noop}EazyBytes@12345', 'read', 0);
+INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `removed`) VALUES (1, 'happy@example.com', '{noop}EazyBytes@12345', 0);
 
 -- Password: 987
-INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `role`, `removed`) VALUES (2, 'admin@example.com', '{bcrypt}$2a$12$cfXEFJI/C4YSGDuj8r6KnOeKHTd82W022S8lHTZFgRBqSvtahKVGm', 'admin', 0);
+INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `removed`) VALUES (2, 'admin@example.com', '{bcrypt}$2a$12$cfXEFJI/C4YSGDuj8r6KnOeKHTd82W022S8lHTZFgRBqSvtahKVGm', 0);
 
 -- Password: 123
-INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `role`, `removed`) VALUES (1, 'tf', '{bcrypt}$2a$10$.EGF/9QGp2eXZT/ZX4hdm.PtRZyn19DucE4AKChjUHP/U/J43YB2y', 'admin', 0);
+INSERT  INTO `user_account` (`customer_id`, `email`, `pwd`, `removed`) VALUES (1, 'tf', '{bcrypt}$2a$10$.EGF/9QGp2eXZT/ZX4hdm.PtRZyn19DucE4AKChjUHP/U/J43YB2y', 0);
 
 
 CREATE TABLE `customer` (
@@ -41,7 +40,15 @@ CREATE TABLE `authorities` (
 );
 
 INSERT INTO `authorities` (`user_account_id`, `name`)
- VALUES (1, 'CUSTOMERACTIONS');
+  VALUES (1, 'CUSTOMERACTIONS');
 
 INSERT INTO `authorities` (`user_account_id`, `name`)
- VALUES (1, 'USERACCOUNTACTIONS');
+  VALUES (1, 'USERACCOUNTACTIONS');
+
+DELETE FROM `authorities`;
+
+INSERT INTO `authorities` (`user_account_id`, `name`)
+  VALUES (1, 'ROLE_USER');
+
+INSERT INTO `authorities` (`user_account_id`, `name`)
+  VALUES (1, 'ROLE_ADMIN');
