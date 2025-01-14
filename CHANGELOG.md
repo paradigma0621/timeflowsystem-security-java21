@@ -1,8 +1,10 @@
 # Changelog
 
 ## 2025-01-14
-### Commit (Add filters debug configuration)
-- Added configuration to enable access to debug information for filters in console
+### Commit  (Add example filter to Filter Chain)
+- Add an example filter in the filter chain that checks if the username in a "Basic Auth" request contains the string "test." If the condition is met, the filter returns an HttpStatus 400
+### Commit 4710b3b (Add filters debug configuration)
+- Add configuration to enable access to debug information for filters in console
 ### Commit 3fb8d59 (Add Roles to UserAccount)
 - Add role-based access control for endpoints requiring user login
 ### Commit ee9b2e9 (Add Authorities to UserAccount)

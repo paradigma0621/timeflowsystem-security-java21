@@ -2,6 +2,7 @@ package com.timeflowsystem.security.config;
 
 import com.timeflowsystem.security.exceptionhandling.CustomAccessDeniedHandler;
 import com.timeflowsystem.security.exceptionhandling.CustomBasicAuthenticationEntryPoint;
+import com.timeflowsystem.security.filter.RequestValidationBeforeFilter;
 import com.timeflowsystem.security.handler.CustomAuthenticationFailureHandler;
 import com.timeflowsystem.security.handler.CustomAuthenticationSuccessHandler;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -43,6 +45,8 @@ public class ProjectSecurityProdConfig {
                 //.requiresChannel(rcc -> rcc.anyRequest().requiresSecure()) // Only HTTPS (deny HTTP requests)
                 .csrf(csrf -> csrf.disable())
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class) // The filter
+                                // RequestValidationBeforeFilter is going to be executed before the BasicAuthenticationFilter
                 .authorizeHttpRequests((requests) -> requests
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS", "CUSTOMERACTIONS")
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("CUSTOMERACTIONS")
