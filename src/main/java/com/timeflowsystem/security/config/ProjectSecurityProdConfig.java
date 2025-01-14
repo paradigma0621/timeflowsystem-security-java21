@@ -2,6 +2,7 @@ package com.timeflowsystem.security.config;
 
 import com.timeflowsystem.security.exceptionhandling.CustomAccessDeniedHandler;
 import com.timeflowsystem.security.exceptionhandling.CustomBasicAuthenticationEntryPoint;
+import com.timeflowsystem.security.filter.AuthoritiesLoggingAtFilter;
 import com.timeflowsystem.security.filter.RequestValidationBeforeFilter;
 import com.timeflowsystem.security.handler.CustomAuthenticationFailureHandler;
 import com.timeflowsystem.security.handler.CustomAuthenticationSuccessHandler;
@@ -47,6 +48,8 @@ public class ProjectSecurityProdConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .addFilterBefore(new RequestValidationBeforeFilter(), BasicAuthenticationFilter.class) // The filter
                                 // RequestValidationBeforeFilter is going to be executed before the BasicAuthenticationFilter
+                .addFilterAfter(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class) // The filter
+                                // AuthoritiesLoggingAtFilter is going to be executed after the BasicAuthenticationFilter
                 .authorizeHttpRequests((requests) -> requests
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS", "CUSTOMERACTIONS")
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("CUSTOMERACTIONS")

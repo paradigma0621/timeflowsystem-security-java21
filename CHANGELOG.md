@@ -1,7 +1,9 @@
 # Changelog
 
 ## 2025-01-14
-### Commit  (Add example filter to Filter Chain)
+### Commit  (Add another example filter to Filter Chain)
+- Add another example filter to the filter chain that logs a message in the console after a successful login
+### Commit 6cdcb69 (Add example filter to Filter Chain)
 - Add an example filter in the filter chain that checks if the username in a "Basic Auth" request contains the string "test." If the condition is met, the filter returns an HttpStatus 400
 ### Commit 4710b3b (Add filters debug configuration)
 - Add configuration to enable access to debug information for filters in console
