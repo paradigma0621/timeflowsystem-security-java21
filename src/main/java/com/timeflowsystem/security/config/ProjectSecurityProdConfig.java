@@ -3,6 +3,8 @@ package com.timeflowsystem.security.config;
 import com.timeflowsystem.security.exceptionhandling.CustomAccessDeniedHandler;
 import com.timeflowsystem.security.exceptionhandling.CustomBasicAuthenticationEntryPoint;
 import com.timeflowsystem.security.filter.AuthoritiesLoggingAtFilter;
+import com.timeflowsystem.security.filter.JWTTokenGeneratorFilter;
+import com.timeflowsystem.security.filter.JWTTokenValidatorFilter;
 import com.timeflowsystem.security.filter.RequestValidationBeforeFilter;
 import com.timeflowsystem.security.handler.CustomAuthenticationFailureHandler;
 import com.timeflowsystem.security.handler.CustomAuthenticationSuccessHandler;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,6 +21,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 
 @Configuration
@@ -31,6 +36,7 @@ public class ProjectSecurityProdConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .sessionManagement(sessionConfig -> sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 // Using the below config, the user can be redirected to the given URL when an invalid session is detected,
                 // by, for example: Session Timeout
                 // .sessionManagement(sessionConfig -> sessionConfig.invalidSessionUrl("/login/invalidSession")
@@ -50,7 +56,12 @@ public class ProjectSecurityProdConfig {
                                 // RequestValidationBeforeFilter is going to be executed before the BasicAuthenticationFilter
                 .addFilterAfter(new AuthoritiesLoggingAtFilter(), BasicAuthenticationFilter.class) // The filter
                                 // AuthoritiesLoggingAtFilter is going to be executed after the BasicAuthenticationFilter
+                .addFilterAfter(new JWTTokenGeneratorFilter(), BasicAuthenticationFilter.class) // The filter
+                                 // JWTTokenGeneratorFilter is going to be executed after the BasicAuthenticationFilter
+                .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class) // The filter
+                                // JWTTokenValidatorFilter is going to be executed before the BasicAuthenticationFilter
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/user").authenticated()
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS", "CUSTOMERACTIONS")
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("CUSTOMERACTIONS")
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS")
@@ -99,6 +110,7 @@ public class ProjectSecurityProdConfig {
         configuration.addAllowedOriginPattern("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

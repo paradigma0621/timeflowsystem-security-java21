@@ -1,7 +1,11 @@
 # Changelog
 
+## 2025-01-18
+### Commit  (Add Filters to generate/validate JWT token)
+- Add filters to execute after and before the BasicAuthenticationFilter: one for generating the token (only when accessing the GET /user endpoint) and another for validating the token (for all other endpoints)
+
 ## 2025-01-14
-### Commit  (Add another example filter to Filter Chain)
+### Commit 447686f (Add another example filter to Filter Chain)
 - Add another example filter to the filter chain that logs a message in the console after a successful login
 ### Commit 6cdcb69 (Add example filter to Filter Chain)
 - Add an example filter in the filter chain that checks if the username in a "Basic Auth" request contains the string "test." If the condition is met, the filter returns an HttpStatus 400
