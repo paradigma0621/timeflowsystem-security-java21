@@ -12,8 +12,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -60,7 +63,7 @@ public class ProjectSecurityProdConfig {
                                  // JWTTokenGeneratorFilter is going to be executed after the BasicAuthenticationFilter
                 .addFilterBefore(new JWTTokenValidatorFilter(), BasicAuthenticationFilter.class) // The filter
                                 // JWTTokenValidatorFilter is going to be executed before the BasicAuthenticationFilter
-                .authorizeHttpRequests((requests) -> requests
+                .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/user").authenticated()
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("USERACCOUNTACTIONS", "CUSTOMERACTIONS")
                         //.requestMatchers("/user-accounts/**").hasAnyAuthority("CUSTOMERACTIONS")
@@ -114,6 +117,17 @@ public class ProjectSecurityProdConfig {
         var source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
+        TimeflowProdUsernamePwdAuthenticationProvider authenticationProvider =
+                new TimeflowProdUsernamePwdAuthenticationProvider(userDetailsService, passwordEncoder);
+        ProviderManager providerManager = new ProviderManager(authenticationProvider);
+        providerManager.setEraseCredentialsAfterAuthentication(false);
+        return providerManager;
     }
 
     @Bean

@@ -1,7 +1,12 @@
 # Changelog
 
+## 2025-02-01
+### Commit  (Customize JWT Token Generation)
+- Add additional endpoint (POST /login/apiLogin) to generate a customized JWT token
+- Remove general code smells to improve code quality and maintainability
+    
 ## 2025-01-18
-### Commit  (Add Filters to generate/validate JWT token)
+### Commit f1f1f1c (Add Filters to generate/validate JWT token)
 - Add filters to execute after and before the BasicAuthenticationFilter: one for generating the token (only when accessing the GET /user endpoint) and another for validating the token (for all other endpoints)
 
 ## 2025-01-14
