@@ -5,6 +5,8 @@ import com.timeflowsystem.security.repository.UserAccountRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -48,6 +50,18 @@ public class UserAccountController {
     @GetMapping("/all")
     public List<UserAccount> findAll() {
         return List.of(userAccountRepository.findById(1L).orElse(null));
+    }
+
+    @GetMapping("/allWithProtectionPreAuthorize")
+    @PreAuthorize("hasRole('ADMIN')")
+    public List<UserAccount> findAllIfAllowedPreAuthorize() {
+        return userAccountRepository.findAll();
+    }
+
+    @GetMapping("/allWithProtectionPostAuthorize")
+    @PostAuthorize("hasRole('ADMIN')")
+    public List<UserAccount> findAllIfAllowedPostAuthorize() {
+        return userAccountRepository.findAll();
     }
 
     @GetMapping("/find-string-authenticated-by-security-context-instance")

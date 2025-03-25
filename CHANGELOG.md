@@ -1,7 +1,12 @@
 # Changelog
 
+## 2025-03-25
+### Commit  (Add endpoints with method level security PreAuthorize and PostAuthorize, both with hasRole() condition)
+- Add additional endpoint (GET /user-accounts/allWithProtectionPreAuthorize) - PreAuthorize
+- Add additional endpoint (GET /user-accounts/allWithProtectionPostAuthorize) - PostAuthorize
+
 ## 2025-02-01
-### Commit  (Customize JWT Token Generation)
+### Commit 821221c (Customize JWT Token Generation)
 - Add additional endpoint (POST /login/apiLogin) to generate a customized JWT token
 - Remove general code smells to improve code quality and maintainability
     
