@@ -1,7 +1,11 @@
 # Changelog
 
+## 2025-05-04
+### Commit  (Add endpoints with method level security PreAuthorize with method parameter evaluation)
+- Add additional endpoint (GET /user-accounts/allWhenUsernameAllowed) - PreAuthorize
+
 ## 2025-03-25
-### Commit  (Add endpoints with method level security PreAuthorize and PostAuthorize, both with hasRole() condition)
+### Commit d431a03 (Add endpoints with method level security PreAuthorize and PostAuthorize, both with hasRole() condition)
 - Add additional endpoint (GET /user-accounts/allWithProtectionPreAuthorize) - PreAuthorize
 - Add additional endpoint (GET /user-accounts/allWithProtectionPostAuthorize) - PostAuthorize
 

@@ -2,6 +2,7 @@ package com.timeflowsystem.security.controller;
 
 import com.timeflowsystem.security.model.UserAccount;
 import com.timeflowsystem.security.repository.UserAccountRepository;
+import com.timeflowsystem.security.service.UserAccountService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.util.List;
 public class UserAccountController {
 
     private final UserAccountRepository userAccountRepository;
+    private final UserAccountService userAccountService;
     private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/getUserAccount")
@@ -52,14 +54,19 @@ public class UserAccountController {
         return List.of(userAccountRepository.findById(1L).orElse(null));
     }
 
+    @GetMapping("/allWhenUsernameAllowed")
+    public List<UserAccount> findAllIfAllowedPreAuthorizeWhereUsernameIsTheUserLogged(@RequestParam String name) {
+        return userAccountService.findAllIfAllowedPreAuthorizeWhereUsernameIsTheUserLogged(name);
+    }
+
     @GetMapping("/allWithProtectionPreAuthorize")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')") // In the database it's saved as "ROLE_ADMIN"
     public List<UserAccount> findAllIfAllowedPreAuthorize() {
         return userAccountRepository.findAll();
     }
 
     @GetMapping("/allWithProtectionPostAuthorize")
-    @PostAuthorize("hasRole('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN')") // In the database it's saved as "ROLE_ADMIN"
     public List<UserAccount> findAllIfAllowedPostAuthorize() {
         return userAccountRepository.findAll();
     }
