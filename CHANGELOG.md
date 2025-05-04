@@ -1,7 +1,10 @@
 # Changelog
 
 ## 2025-05-04
-### Commit  (Add endpoints with method level security PreAuthorize with method parameter evaluation)
+### Commit  (Add endpoints with method level security that prefilter / postfilter a input Collection)
+- Add additional endpoint (GET /user-accounts/emailDifferentPostFilter) - PostFilter
+- Add additional endpoint (GET /user-accounts/emailDifferentPreFilter) - PreFilter
+### Commit 4819beb (Add endpoints with method level security PreAuthorize with method parameter evaluation)
 - Add additional endpoint (GET /user-accounts/allWhenUsernameAllowed) - PreAuthorize
 
 ## 2025-03-25

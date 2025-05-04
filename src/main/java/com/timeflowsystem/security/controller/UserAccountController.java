@@ -4,10 +4,14 @@ import com.timeflowsystem.security.model.UserAccount;
 import com.timeflowsystem.security.repository.UserAccountRepository;
 import com.timeflowsystem.security.service.UserAccountService;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreFilter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +27,7 @@ public class UserAccountController {
     private final UserAccountRepository userAccountRepository;
     private final UserAccountService userAccountService;
     private final PasswordEncoder passwordEncoder;
+    private static final Logger logger = LoggerFactory.getLogger(UserAccountController.class);
 
     @GetMapping("/getUserAccount")
     public String findUser() {
@@ -57,6 +62,22 @@ public class UserAccountController {
     @GetMapping("/allWhenUsernameAllowed")
     public List<UserAccount> findAllIfAllowedPreAuthorizeWhereUsernameIsTheUserLogged(@RequestParam String name) {
         return userAccountService.findAllIfAllowedPreAuthorizeWhereUsernameIsTheUserLogged(name);
+    }
+
+    @PostMapping("/emailDifferentPreFilter")
+    @PreFilter("filterObject.email != 'admin@example.com'")
+    public List<UserAccount> returnUsersWhereWhenPreFilterWithEmail(@RequestBody List<UserAccount> users) {
+        // Here do some logic with all the UserAccounts that don't have email 'admin@example.com'
+        logger.info(users.toString());
+        return users; // Returns  all the UserAccounts that don't have 'admin@example.com'
+    }
+
+    @PostMapping("/emailDifferentPostFilter")
+    @PostFilter("filterObject.email != 'admin@example.com'")
+    public List<UserAccount> returnUsersWhereWhenPostFilterWithEmail(@RequestBody List<UserAccount> users) {
+        // Here do some logic with all the UserAccounts
+        logger.info(users.toString());
+        return users; // Returns  all the UserAccounts that don't have 'admin@example.com'
     }
 
     @GetMapping("/allWithProtectionPreAuthorize")
